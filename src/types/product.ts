@@ -1,6 +1,3 @@
-// I am not sure how the product status is kept.
-// It could also be that it's approved yes - no - undefined and whether there is an update is separate?
-
 import { FunctionalColorsType } from './colors';
 
 export enum ProductStatus {

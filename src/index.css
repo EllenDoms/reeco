@@ -7,4 +7,25 @@
     font-family: Arial, system-ui, sans-serif;
     @apply text-text;
   }
+
+  table {
+    @apply w-full border border-gray-100 rounded-md;
+  }
+
+  table thead th {
+    @apply text-xs text-gray-600 uppercase font-normal text-left leading-6 py-2;
+  }
+
+  table thead th:first-child,
+  table thead th:last-child {
+    @apply px-0;
+  }
+
+  table tr {
+    @apply border-t border-gray-200;
+  }
+
+  table td {
+    @apply py-3 text-sm text-gray-700;
+  }
 }

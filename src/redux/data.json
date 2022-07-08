@@ -5,35 +5,35 @@
       "brand": "Hormel Black Labelmany",
       "price": 60.67,
       "quantity": 0,
-      "status": "undefined"
+      "status": "UNDEFINED"
     },
     {
       "title": "Avocado",
       "brand": "Hormel Black Labelmany",
       "price": 60.67,
       "quantity": 15,
-      "status": "undefined"
+      "status": "UNDEFINED"
     },
     {
       "title": "Avocado",
       "brand": "Hormel Black Labelmany",
       "price": 60.67,
       "quantity": 15,
-      "status": "undefined"
+      "status": "UNDEFINED"
     },
     {
       "title": "Avocado",
       "brand": "Hormel Black Labelmany",
       "price": 60.67,
       "quantity": 0,
-      "status": "undefined"
+      "status": "UNDEFINED"
     },
     {
       "title": "Avocado",
       "brand": "Hormel Black Labelmany",
       "price": 60.67,
       "quantity": 13,
-      "status": "undefined"
+      "status": "UNDEFINED"
     }
   ]
 }
