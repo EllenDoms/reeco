@@ -72,7 +72,16 @@ export const ordersSlice = createSlice({
       .addCase(setApproved, (state, action) => {
         let updated = state.order?.products.find((product) => product.id === action.payload);
         if (updated) {
-          updated.status = 'APPROVED';
+          updated.status = ProductStatus.APPROVED;
+        }
+      })
+      .addCase(setMissing, (state, action) => {
+        let updated = state.order?.products.find((product) => product.id === action.payload.id);
+
+        if (updated) {
+          action.payload.urgent
+            ? (updated.status = ProductStatus.MIS_URGENT)
+            : (updated.status = ProductStatus.MISSING);
         }
       });
   },
@@ -81,8 +90,6 @@ export const ordersSlice = createSlice({
 
 export const selectOrderById = (state: RootState) => state.orderStore;
 export const setApproved = createAction<string>('setApproved');
-
-// Action creators are generated for each case reducer function
-export const {} = ordersSlice.actions;
+export const setMissing = createAction<{ id: string; urgent: boolean }>('setMissing');
 
 export default ordersSlice.reducer;

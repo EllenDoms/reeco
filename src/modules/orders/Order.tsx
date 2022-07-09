@@ -1,16 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SecondaryButton, PrimaryButton } from '../../components/button/Button';
 import { SubHeader } from '../../components/header/SubHeader';
 import { FullPageLoading } from '../../components/loading/fullPageLoading';
+import { MissingProductModal } from '../../components/modal/missingProductModal';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchOrderById, selectOrderById } from '../../redux/orderStore';
+import { fetchOrderById, IProductOrder, selectOrderById } from '../../redux/orderStore';
 import { OrderBanner } from './OrderBanner';
 import { OrderTable } from './orderTable/OrderTable';
 
 interface Props {}
 
 export function Order(props: Props) {
+  const [missingProductModal, setMissingProductModal] = useState<IProductOrder | undefined>();
   const dispatch = useAppDispatch();
   const orderStore = useSelector(selectOrderById);
 
@@ -36,8 +38,14 @@ export function Order(props: Props) {
       ) : (
         <div className="px-14 py-8 flex-grow flex flex-col gap-6">
           <OrderBanner order={order} />
-          <OrderTable products={order?.products} />
+          <OrderTable products={order?.products} setMissingProductModal={setMissingProductModal} />
         </div>
+      )}
+      {missingProductModal && (
+        <MissingProductModal
+          product={missingProductModal}
+          closeModal={() => setMissingProductModal(undefined)}
+        />
       )}
     </div>
   );

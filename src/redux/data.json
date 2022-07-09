@@ -13,7 +13,7 @@
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
           "quantity": 0,
-          "status": "UNDEFINED"
+          "status": "undefined"
         },
         {
           "id": "2",
@@ -21,7 +21,7 @@
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
           "quantity": 15,
-          "status": "UNDEFINED"
+          "status": "undefined"
         },
         {
           "id": "3",
@@ -29,7 +29,7 @@
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
           "quantity": 15,
-          "status": "UNDEFINED"
+          "status": "undefined"
         },
         {
           "id": "4",
@@ -37,7 +37,7 @@
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
           "quantity": 0,
-          "status": "UNDEFINED"
+          "status": "undefined"
         },
         {
           "id": "5",
@@ -46,7 +46,7 @@
           "price": 60.67,
           "prevPrice": 10.45,
           "quantity": 13,
-          "status": "UNDEFINED"
+          "status": "undefined"
         }
       ]
     }

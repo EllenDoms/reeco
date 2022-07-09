@@ -1,13 +1,13 @@
 import { FunctionalColorsType } from './colors';
 
 export enum ProductStatus {
-  UNDEFINED = 'UNDEFINED',
-  MIS_URGENT = 'MIS_URGENT',
-  MISSING = 'MISSING',
-  APPROVED = 'APPROVED',
-  PRICE_UPDATE = 'PRICE_UPDATE',
-  QUANTITY_UPDATE = 'QUANTITY_UPDATE',
-  QUAN_PRICE_UPDATE = 'QUAN_PRICE_UPDATE',
+  UNDEFINED = 'undefined',
+  MIS_URGENT = 'Missing - urgent',
+  MISSING = 'Missing',
+  APPROVED = 'Approved',
+  PRICE_UPDATE = 'Price update',
+  QUANTITY_UPDATE = 'Quantity update',
+  QUAN_PRICE_UPDATE = 'Price & quantity update',
 }
 
 export const ProductStatusColors = {

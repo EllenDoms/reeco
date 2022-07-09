@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   FastfoodOutlined,
   KebabDiningOutlined,
@@ -14,11 +14,23 @@ interface Props {
 }
 
 export function OrderBanner({ order }: Props) {
+  const total = useMemo(() => {
+    let totalAmount = 0;
+    order?.products.map((product) => (totalAmount += product.price * product.quantity));
+    return totalAmount;
+  }, [order?.products]);
+
   return (
     <div className="border border-gray-200 rounded-md bg-white flex flex-row justify-between p-6 divide-x ">
       <BannerTextItem label="Supplier" text={order?.supplier} />
       <BannerTextItem label="Shipping date" text={order?.shipping} />
-      <BannerTextItem label="Total" text="$ 15,028.3" /> {/* TODO: should be calculated  */}
+      <BannerTextItem
+        label="Total"
+        text={total.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        })}
+      />
       <div className="w-full px-4">
         <p className="text-gray-500 text-sm font-semibold leading-8">Category</p>
         <p className="text-base grid grid-cols-4 gap-2">

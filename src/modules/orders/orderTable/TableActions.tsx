@@ -2,22 +2,22 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { LinkButton } from '../../../components/button/Button';
 import { IconButton } from '../../../components/button/IconButton';
-import { setApproved } from '../../../redux/orderStore';
+import { IProductOrder, setApproved } from '../../../redux/orderStore';
 import { ProductStatus } from '../../../types/product';
 
 interface Props {
-  status: string;
-  id: string;
+  product: IProductOrder;
+  setMissingProductModal: (product: IProductOrder) => void;
 }
 
-export function TableActions({ status, id }: Props) {
+export function TableActions({ product, setMissingProductModal }: Props) {
   const dispatch = useDispatch();
 
   const handleSetApproved = () => {
-    dispatch(setApproved(id));
+    dispatch(setApproved(product.id));
   };
   const handleSetMissing = () => {
-    console.log('missing');
+    setMissingProductModal(product);
   };
   const handleEdit = () => {
     console.log('edit');
@@ -28,7 +28,9 @@ export function TableActions({ status, id }: Props) {
       <IconButton
         icon="CheckOutlined"
         buttonStyle={
-          status === ProductStatus.APPROVED ? IconButton.style.POSITIVE : IconButton.style.PRIMARY
+          product.status === ProductStatus.APPROVED
+            ? IconButton.style.POSITIVE
+            : IconButton.style.PRIMARY
         }
         onClick={handleSetApproved}
       />
@@ -36,7 +38,7 @@ export function TableActions({ status, id }: Props) {
         icon="CloseOutlined"
         onClick={handleSetMissing}
         buttonStyle={
-          status === ProductStatus.MIS_URGENT || status === ProductStatus.MISSING
+          product.status === ProductStatus.MIS_URGENT || product.status === ProductStatus.MISSING
             ? IconButton.style.NEGATIVE
             : IconButton.style.PRIMARY
         }

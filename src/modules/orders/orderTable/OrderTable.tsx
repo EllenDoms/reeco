@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 import { useTable } from 'react-table';
 import { PrintOutlined } from '@mui/icons-material';
-import { LinkButton, SecondaryButton } from '../../../components/button/Button';
+import { SecondaryButton } from '../../../components/button/Button';
 import { IProductOrder } from '../../../redux/orderStore';
-import { Label } from '../../../components/badges/label';
-import { IconButton } from '../../../components/button/IconButton';
+import { Label } from '../../../components/badge/label';
 import { TableActions } from './TableActions';
+import { ProductStatus, ProductStatusColors } from '../../../types/product';
 
 interface Props {
   products?: IProductOrder[];
+  setMissingProductModal: (product: IProductOrder) => void;
 }
 
 export function OrderTable(props: Props) {
@@ -26,7 +27,7 @@ export function OrderTable(props: Props) {
   );
 }
 
-function Table({ products }: Props) {
+function Table({ products, setMissingProductModal }: Props) {
   const columns = useMemo(
     () => [
       {
@@ -95,16 +96,22 @@ function Table({ products }: Props) {
         Header: 'Status',
         id: 'status',
         accessor: (props: IProductOrder) => {
-          return { id: props.id, status: props.status };
+          return { product: props };
         },
-        Cell: (props: { value: { id: string; status: string } }) => (
+        Cell: (props: { value: { product: IProductOrder } }) => (
           <div className="flex justify-between items-center">
             <div>
-              {props.value.status !== 'UNDEFINED' && (
-                <Label label={props.value.status} color={Label.colors.SUCCESS} />
+              {props.value.product.status !== ProductStatus.UNDEFINED && (
+                <Label
+                  label={props.value.product.status}
+                  color={ProductStatusColors[props.value.product.status as ProductStatus]}
+                />
               )}
             </div>
-            <TableActions status={props.value.status} id={props.value.id} />
+            <TableActions
+              product={props.value.product}
+              setMissingProductModal={setMissingProductModal}
+            />
           </div>
         ),
       },
