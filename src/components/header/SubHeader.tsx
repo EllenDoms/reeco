@@ -17,8 +17,9 @@ export function SubHeader({ breadCrumbs, actions }: Props) {
         <div className="flex flex-row gap-2 items-center">
           {breadCrumbs.map((crumb, i) => {
             const isSelected = breadCrumbs.length - 1 === i;
+
             return (
-              <div key={crumb.title}>
+              <div key={crumb.title} className="flex flex-row gap-2 items-center">
                 <div className={isSelected ? 'text-text underline' : 'text-gray-700'}>
                   {crumb.title}
                 </div>

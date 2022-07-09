@@ -1,12 +1,14 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTable } from 'react-table';
 import { PrintOutlined } from '@mui/icons-material';
-import { SecondaryButton } from '../../components/button/Button';
-import { selectOrders, fetchOrders } from '../../redux/orderStore';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { Label } from '../../components/badges/label';
+import { LinkButton, SecondaryButton } from '../../../components/button/Button';
+import { IProductOrder } from '../../../redux/orderStore';
+import { Label } from '../../../components/badges/label';
+import { IconButton } from '../../../components/button/IconButton';
 
-interface Props {}
+interface Props {
+  products?: IProductOrder[];
+}
 
 export function OrderTable(props: Props) {
   return (
@@ -23,16 +25,7 @@ export function OrderTable(props: Props) {
   );
 }
 
-function Table(props: Props) {
-  const orderStore = useAppSelector(selectOrders);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOrders());
-  }, []);
-
-  const data = orderStore.order || [];
-
+function Table({ products }: Props) {
   const columns = useMemo(
     () => [
       {
@@ -60,7 +53,20 @@ function Table(props: Props) {
         accessor: 'status',
         Cell: (props: { value: string }) => (
           <div className="flex items-start">
-            <Label label={props.value} color={Label.colors.SUCCESS} />
+            {props.value !== 'UNDEFINED' && (
+              <Label label={props.value} color={Label.colors.SUCCESS} />
+            )}
+          </div>
+        ),
+      },
+      {
+        Header: '',
+        accessor: 'actions',
+        Cell: (props: { value: string }) => (
+          <div className="flex items-center gap-2 justify-end">
+            <IconButton icon="CheckOutlined" />
+            <IconButton icon="CloseOutlined" />
+            <LinkButton label="Edit" onClick={() => console.log('edit')} />
           </div>
         ),
       },
@@ -72,14 +78,12 @@ function Table(props: Props) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     // @ts-ignore
     columns,
-    data,
+    data: products || [],
   });
 
   return (
     <div>
-      {orderStore.loading ? (
-        'loading'
-      ) : (
+      {products && (
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (

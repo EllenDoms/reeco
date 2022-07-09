@@ -7,15 +7,18 @@ import {
   CookieOutlined,
   LiquorOutlined,
 } from '@mui/icons-material';
+import { IOrder } from '../../redux/orderStore';
 
-interface Props {}
+interface Props {
+  order?: IOrder;
+}
 
-export function OrderBanner(props: Props) {
+export function OrderBanner({ order }: Props) {
   return (
     <div className="border border-gray-200 rounded-md bg-white flex flex-row justify-between p-6 divide-x ">
-      <BannerTextItem label="Supplier" text="East Coast fruits & vegetables" />
-      <BannerTextItem label="Shipping date" text="Thu, feb 10" />
-      <BannerTextItem label="Total" text="$ 15,028.3" />
+      <BannerTextItem label="Supplier" text={order?.supplier} />
+      <BannerTextItem label="Shipping date" text={order?.shipping} />
+      <BannerTextItem label="Total" text="$ 15,028.3" /> {/* TODO: should be calculated  */}
       <div className="w-full px-4">
         <p className="text-gray-500 text-sm font-semibold leading-8">Category</p>
         <p className="text-base grid grid-cols-4 gap-2">
@@ -27,15 +30,15 @@ export function OrderBanner(props: Props) {
           <CakeOutlined fontSize="small" className="text-gray-500" />
         </p>
       </div>
-      <BannerTextItem label="Department" text="300-444-678" />
-      <BannerTextItem label="Status" text="Awaiting for approval" />
+      <BannerTextItem label="Department" text={order?.department} />
+      <BannerTextItem label="Status" text={order?.status} />
     </div>
   );
 }
 
 interface ItemProps {
   label: string;
-  text: string;
+  text?: string;
 }
 
 function BannerTextItem({ label, text }: ItemProps) {

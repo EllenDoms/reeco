@@ -1,39 +1,53 @@
 {
-  "order": [
+  "orders": [
     {
-      "title": "Avocado",
-      "brand": "Hormel Black Labelmany",
-      "price": 60.67,
-      "quantity": 0,
-      "status": "UNDEFINED"
-    },
-    {
-      "title": "Avocado",
-      "brand": "Hormel Black Labelmany",
-      "price": 60.67,
-      "quantity": 15,
-      "status": "UNDEFINED"
-    },
-    {
-      "title": "Avocado",
-      "brand": "Hormel Black Labelmany",
-      "price": 60.67,
-      "quantity": 15,
-      "status": "UNDEFINED"
-    },
-    {
-      "title": "Avocado",
-      "brand": "Hormel Black Labelmany",
-      "price": 60.67,
-      "quantity": 0,
-      "status": "UNDEFINED"
-    },
-    {
-      "title": "Avocado",
-      "brand": "Hormel Black Labelmany",
-      "price": 60.67,
-      "quantity": 13,
-      "status": "UNDEFINED"
+      "id": "32457ABC",
+      "supplier": "East Coast fruits & vegetables",
+      "shipping": "Thu, feb 10",
+      "department": "300-444-678",
+      "status": "WAITING",
+      "products": [
+        {
+          "id": 1,
+          "title": "Avocado",
+          "brand": "Hormel Black Labelmany",
+          "price": 60.67,
+          "quantity": 0,
+          "status": "UNDEFINED"
+        },
+        {
+          "id": 2,
+          "title": "Avocado",
+          "brand": "Hormel Black Labelmany",
+          "price": 60.67,
+          "quantity": 15,
+          "status": "UNDEFINED"
+        },
+        {
+          "id": 3,
+          "title": "Avocado",
+          "brand": "Hormel Black Labelmany",
+          "price": 60.67,
+          "quantity": 15,
+          "status": "UNDEFINED"
+        },
+        {
+          "id": 4,
+          "title": "Avocado",
+          "brand": "Hormel Black Labelmany",
+          "price": 60.67,
+          "quantity": 0,
+          "status": "UNDEFINED"
+        },
+        {
+          "id": 5,
+          "title": "Avocado",
+          "brand": "Hormel Black Labelmany",
+          "price": 60.67,
+          "quantity": 13,
+          "status": "UNDEFINED"
+        }
+      ]
     }
   ]
 }

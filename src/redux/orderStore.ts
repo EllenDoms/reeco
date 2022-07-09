@@ -1,18 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { Iproducts } from './productStore';
-import { ProductStatus } from '../types/product';
 import { fetchOrderAPI } from './ordersAPI';
 import { RootState } from './store';
 
-export interface IProductOrder extends Iproducts {
+export interface IProducts {
+  title: string;
+  brand: string;
+  price: number;
+}
+
+export interface IProductOrder extends IProducts {
   quantity: number;
-  status: string; // should be ProductStatus
+  // I am not sure how you store status of the products in an order
+  // (missing - missing with urgency - ...)
+  // So for the exercise I put it in one value being 'status'
+  status: string;
+}
+
+export interface IOrder {
+  id: string;
+  supplier: string;
+  shipping: string;
+  department: string;
+  status: string;
+  products: IProductOrder[];
 }
 
 export interface OrderState {
   loading: boolean;
-  order?: IProductOrder[];
+  order?: IOrder;
   error?: string;
 }
 
@@ -20,8 +35,8 @@ const initialState: OrderState = {
   loading: false,
 };
 
-export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
-  const response = await fetchOrderAPI();
+export const fetchOrderById = createAsyncThunk('orders/fetchOrderById', async (orderId: string) => {
+  const response = await fetchOrderAPI(orderId);
   return response.data;
 });
 
@@ -30,15 +45,15 @@ export const orderssSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrders.pending, (state) => {
+      .addCase(fetchOrderById.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchOrders.fulfilled, (state, action) => {
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
         state.loading = false;
         state.order = action.payload;
         state.error = undefined;
       })
-      .addCase(fetchOrders.rejected, (state, action) => {
+      .addCase(fetchOrderById.rejected, (state, action) => {
         state.loading = false;
         state.order = undefined;
         state.error = action.error.message;
@@ -47,7 +62,7 @@ export const orderssSlice = createSlice({
   reducers: {},
 });
 
-export const selectOrders = (state: RootState) => state.orderStore;
+export const selectOrderById = (state: RootState) => state.orderStore;
 
 // Action creators are generated for each case reducer function
 export const {} = orderssSlice.actions;
