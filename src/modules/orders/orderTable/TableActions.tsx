@@ -8,9 +8,10 @@ import { ProductStatus } from '../../../types/product';
 interface Props {
   product: IProductOrder;
   setMissingProductModal: (product: IProductOrder) => void;
+  setEditProductModal: (product: IProductOrder) => void;
 }
 
-export function TableActions({ product, setMissingProductModal }: Props) {
+export function TableActions({ product, setMissingProductModal, setEditProductModal }: Props) {
   const dispatch = useDispatch();
 
   const handleSetApproved = () => {
@@ -20,7 +21,7 @@ export function TableActions({ product, setMissingProductModal }: Props) {
     setMissingProductModal(product);
   };
   const handleEdit = () => {
-    console.log('edit');
+    setEditProductModal(product);
   };
 
   return (
@@ -28,7 +29,10 @@ export function TableActions({ product, setMissingProductModal }: Props) {
       <IconButton
         icon="CheckOutlined"
         buttonStyle={
-          product.status === ProductStatus.APPROVED
+          product.status === ProductStatus.APPROVED ||
+          product.status === ProductStatus.PRICE_UPDATE ||
+          product.status === ProductStatus.QUANTITY_UPDATE ||
+          product.status === ProductStatus.QUAN_PRICE_UPDATE
             ? IconButton.style.POSITIVE
             : IconButton.style.PRIMARY
         }

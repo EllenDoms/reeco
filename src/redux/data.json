@@ -12,6 +12,7 @@
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
+          "packing": "6 * 1LB",
           "quantity": 0,
           "status": "undefined"
         },
@@ -20,6 +21,7 @@
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
+          "packing": "6 * 1LB",
           "quantity": 15,
           "status": "undefined"
         },
@@ -28,6 +30,7 @@
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
+          "packing": "6 * 1LB",
           "quantity": 15,
           "status": "undefined"
         },
@@ -36,6 +39,7 @@
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
+          "packing": "6 * 1LB",
           "quantity": 0,
           "status": "undefined"
         },
@@ -44,7 +48,7 @@
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
-          "prevPrice": 10.45,
+          "packing": "6 * 1LB",
           "quantity": 13,
           "status": "undefined"
         }

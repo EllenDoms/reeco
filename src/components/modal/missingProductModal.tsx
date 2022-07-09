@@ -25,7 +25,7 @@ export function MissingProductModal({ product, closeModal }: Props) {
           <IconButton icon="CloseOutlined" onClick={closeModal} />
         </div>
         <p>Is '{product.title}' urgent?</p>
-        <div className="mt-4 flex flex-row items-center justify-end">
+        <div className="mt-4 flex flex-row items-center justify-end gap-2">
           <LinkButton label="Yes" onClick={() => handleSetMissing(true)} />
           <LinkButton label="No" onClick={() => handleSetMissing(false)} />
         </div>

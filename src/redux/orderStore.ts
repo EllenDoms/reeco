@@ -15,12 +15,13 @@ export interface IProducts {
   title: string;
   brand: string;
   price: number;
-  prevPrice?: number;
+  packing: string;
+  newPrice?: number;
 }
 
 export interface IProductOrder extends IProducts {
   quantity: number;
-  prevQuantity?: number;
+  newQuantity?: number;
   // I am not sure how you store status of the products in an order
   // (missing - missing with urgency - ...)
   // So for the exercise I put it in one value being 'status'
@@ -75,13 +76,33 @@ export const ordersSlice = createSlice({
           updated.status = ProductStatus.APPROVED;
         }
       })
-      .addCase(setMissing, (state, action) => {
-        let updated = state.order?.products.find((product) => product.id === action.payload.id);
+      .addCase(setMissing, (state, { payload }) => {
+        let updated = state.order?.products.find((product) => product.id === payload.id);
 
         if (updated) {
-          action.payload.urgent
+          payload.urgent
             ? (updated.status = ProductStatus.MIS_URGENT)
             : (updated.status = ProductStatus.MISSING);
+        }
+      })
+      .addCase(updateProductData, (state, { payload }) => {
+        let updated = state.order?.products.find((product) => product.id === payload.id);
+
+        if (updated) {
+          updated.newPrice = payload.newPrice;
+          updated.newQuantity = payload.newQuantity;
+
+          // also update the status
+          // after getting to know the product a bit better, this would be an improvement:
+          // make the status more dependant on other fields that are filled in (updated quantity etc)
+          // to have one source of truth
+          if (payload.newPrice && payload.newQuantity) {
+            updated.status = ProductStatus.QUAN_PRICE_UPDATE;
+          } else if (payload.newPrice) {
+            updated.status = ProductStatus.PRICE_UPDATE;
+          } else if (payload.newQuantity) {
+            updated.status = ProductStatus.QUANTITY_UPDATE;
+          }
         }
       });
   },
@@ -91,5 +112,6 @@ export const ordersSlice = createSlice({
 export const selectOrderById = (state: RootState) => state.orderStore;
 export const setApproved = createAction<string>('setApproved');
 export const setMissing = createAction<{ id: string; urgent: boolean }>('setMissing');
+export const updateProductData = createAction<IProductOrder>('updateProductData');
 
 export default ordersSlice.reducer;

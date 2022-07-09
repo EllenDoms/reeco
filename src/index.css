@@ -28,4 +28,7 @@
   table td {
     @apply text-sm text-gray-700;
   }
+  .input {
+    @apply border border-gray-200 rounded-lg p-2;
+  }
 }

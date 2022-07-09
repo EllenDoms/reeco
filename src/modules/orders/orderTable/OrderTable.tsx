@@ -10,6 +10,7 @@ import { ProductStatus, ProductStatusColors } from '../../../types/product';
 interface Props {
   products?: IProductOrder[];
   setMissingProductModal: (product: IProductOrder) => void;
+  setEditProductModal: (product: IProductOrder) => void;
 }
 
 export function OrderTable(props: Props) {
@@ -27,7 +28,7 @@ export function OrderTable(props: Props) {
   );
 }
 
-function Table({ products, setMissingProductModal }: Props) {
+function Table({ products, setMissingProductModal, setEditProductModal }: Props) {
   const columns = useMemo(
     () => [
       {
@@ -42,29 +43,50 @@ function Table({ products, setMissingProductModal }: Props) {
         Header: 'Price',
         id: 'price',
         accessor: (props: IProductOrder) => {
-          return { price: props.price, prevPrice: props.prevPrice };
+          return { price: props.price, newPrice: props.newPrice, packing: props.packing };
         },
-        Cell: (props: { value: { price: number; prevPrice: number } }) => (
-          <div>
-            <p>
-              <b>{props.value.price}</b> / 6 * 1LB
-            </p>
-            <p className="line-through">{props.value.prevPrice}</p>
-          </div>
-        ),
+        Cell: (props: { value: { price: number; newPrice: number; packing: string } }) => {
+          const price = props.value.newPrice ? props.value.newPrice : props.value.price;
+          return (
+            <div>
+              <p>
+                <b>
+                  {price.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+                </b>{' '}
+                / {props.value.packing}
+              </p>
+              {props.value.newPrice && (
+                <p className="line-through">
+                  {props.value.price.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+                </p>
+              )}
+            </div>
+          );
+        },
       },
       {
         Header: 'Quantity',
         id: 'quantity',
         accessor: (props: IProductOrder) => {
-          return { quantity: props.quantity, prevQuantity: props.prevQuantity };
+          return {
+            quantity: props.quantity,
+            newQuantity: props.newQuantity,
+            packing: props.packing,
+          };
         },
-        Cell: (props: { value: { quantity: number; prevQuantity: number } }) => (
+        Cell: (props: { value: { quantity: number; newQuantity: number; packing: string } }) => (
           <div>
             <p>
-              <b>{props.value.quantity}</b> x 6 * 1LB
+              <b>{props.value.newQuantity ? props.value.newQuantity : props.value.quantity}</b> x{' '}
+              {props.value.packing}
             </p>
-            <p className="line-through">{props.value.prevQuantity}</p>
+            {props.value.newQuantity && <p className="line-through">{props.value.quantity}</p>}
           </div>
         ),
       },
@@ -72,25 +94,38 @@ function Table({ products, setMissingProductModal }: Props) {
         Header: 'Total',
         id: 'total',
         accessor: (props: IProductOrder) => {
-          return { price: props.price, quantity: props.quantity, prevPrice: props.prevPrice };
+          return {
+            price: props.price,
+            quantity: props.quantity,
+            newPrice: props.newPrice,
+            newQuantity: props.newQuantity,
+          };
         },
-        Cell: (props: { value: { price: number; quantity: number; prevPrice: number } }) => (
-          <div>
-            <p>
-              {(props.value.price * props.value.quantity).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              })}
-            </p>
-            <p className="line-through">
-              {props.value.prevPrice &&
-                (props.value.prevPrice * props.value.quantity).toLocaleString('en-US', {
+        Cell: (props: {
+          value: { price: number; quantity: number; newPrice: number; newQuantity: number };
+        }) => {
+          const total = props.value.price * props.value.quantity;
+          const newTotal =
+            (props.value.newPrice || props.value.price) *
+            (props.value.newQuantity || props.value.quantity);
+          return (
+            <div>
+              <p>
+                {newTotal.toLocaleString('en-US', {
                   style: 'currency',
                   currency: 'USD',
                 })}
-            </p>
-          </div>
-        ),
+              </p>
+              <p className="line-through">
+                {(props.value.newPrice || props.value.newQuantity) &&
+                  total.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+              </p>
+            </div>
+          );
+        },
       },
       {
         Header: 'Status',
@@ -111,6 +146,7 @@ function Table({ products, setMissingProductModal }: Props) {
             <TableActions
               product={props.value.product}
               setMissingProductModal={setMissingProductModal}
+              setEditProductModal={setEditProductModal}
             />
           </div>
         ),
