@@ -5,10 +5,10 @@
       "supplier": "East Coast fruits & vegetables",
       "shipping": "Thu, feb 10",
       "department": "300-444-678",
-      "status": "WAITING",
+      "status": "Awaiting your approval",
       "products": [
         {
-          "id": 1,
+          "id": "1",
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
@@ -16,7 +16,7 @@
           "status": "UNDEFINED"
         },
         {
-          "id": 2,
+          "id": "2",
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
@@ -24,7 +24,7 @@
           "status": "UNDEFINED"
         },
         {
-          "id": 3,
+          "id": "3",
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
@@ -32,7 +32,7 @@
           "status": "UNDEFINED"
         },
         {
-          "id": 4,
+          "id": "4",
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
@@ -40,10 +40,11 @@
           "status": "UNDEFINED"
         },
         {
-          "id": 5,
+          "id": "5",
           "title": "Avocado",
           "brand": "Hormel Black Labelmany",
           "price": 60.67,
+          "prevPrice": 10.45,
           "quantity": 13,
           "status": "UNDEFINED"
         }

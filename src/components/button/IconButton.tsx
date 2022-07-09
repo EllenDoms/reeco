@@ -44,9 +44,8 @@ export function IconButton({
 IconButton.style = IconButtonStyles;
 
 export const ButtonStyleMap = {
-  [IconButtonStyles.PRIMARY]: 'text-text focus:bg-gray-100 hover:bg-gray-100 rounded-md',
-  [IconButtonStyles.NEGATIVE]: 'text-red focus:bg-red-100 hover:bg-red-100 rounded-md',
-  [IconButtonStyles.POSITIVE]: 'text-green focus:bg-green-100 hover:bg-green-100 rounded-md',
-  [IconButtonStyles.FILLED]:
-    'text-white bg-green focus:ring-green focus:ring-4 ring-offset-1 rounded-full',
+  [IconButtonStyles.PRIMARY]: 'text-text focus:bg-gray-100 hover:bg-gray-100',
+  [IconButtonStyles.NEGATIVE]: 'text-red focus:bg-red-100 hover:bg-red-100',
+  [IconButtonStyles.POSITIVE]: 'text-green focus:bg-green-100 hover:bg-green-100',
+  [IconButtonStyles.FILLED]: 'text-white bg-green focus:ring-green focus:ring-4 ring-offset-1',
 };

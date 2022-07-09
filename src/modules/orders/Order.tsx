@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { SecondaryButton, PrimaryButton } from '../../components/button/Button';
 import { SubHeader } from '../../components/header/SubHeader';
 import { FullPageLoading } from '../../components/loading/fullPageLoading';
@@ -10,12 +11,12 @@ import { OrderTable } from './orderTable/OrderTable';
 interface Props {}
 
 export function Order(props: Props) {
-  const orderStore = useAppSelector(selectOrderById);
   const dispatch = useAppDispatch();
+  const orderStore = useSelector(selectOrderById);
 
   useEffect(() => {
     dispatch(fetchOrderById('32457ABC'));
-  }, []);
+  }, [dispatch]);
 
   const order = orderStore.order;
 

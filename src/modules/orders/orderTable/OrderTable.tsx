@@ -5,6 +5,7 @@ import { LinkButton, SecondaryButton } from '../../../components/button/Button';
 import { IProductOrder } from '../../../redux/orderStore';
 import { Label } from '../../../components/badges/label';
 import { IconButton } from '../../../components/button/IconButton';
+import { TableActions } from './TableActions';
 
 interface Props {
   products?: IProductOrder[];
@@ -38,35 +39,72 @@ function Table({ products }: Props) {
       },
       {
         Header: 'Price',
-        accessor: 'price',
-      },
-      {
-        Header: 'Quantity',
-        accessor: 'quantity',
-      },
-      {
-        Header: 'Total',
-        accessor: 'total',
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-        Cell: (props: { value: string }) => (
-          <div className="flex items-start">
-            {props.value !== 'UNDEFINED' && (
-              <Label label={props.value} color={Label.colors.SUCCESS} />
-            )}
+        id: 'price',
+        accessor: (props: IProductOrder) => {
+          return { price: props.price, prevPrice: props.prevPrice };
+        },
+        Cell: (props: { value: { price: number; prevPrice: number } }) => (
+          <div>
+            <p>
+              <b>{props.value.price}</b> / 6 * 1LB
+            </p>
+            <p className="line-through">{props.value.prevPrice}</p>
           </div>
         ),
       },
       {
-        Header: '',
-        accessor: 'actions',
-        Cell: (props: { value: string }) => (
-          <div className="flex items-center gap-2 justify-end">
-            <IconButton icon="CheckOutlined" />
-            <IconButton icon="CloseOutlined" />
-            <LinkButton label="Edit" onClick={() => console.log('edit')} />
+        Header: 'Quantity',
+        id: 'quantity',
+        accessor: (props: IProductOrder) => {
+          return { quantity: props.quantity, prevQuantity: props.prevQuantity };
+        },
+        Cell: (props: { value: { quantity: number; prevQuantity: number } }) => (
+          <div>
+            <p>
+              <b>{props.value.quantity}</b> x 6 * 1LB
+            </p>
+            <p className="line-through">{props.value.prevQuantity}</p>
+          </div>
+        ),
+      },
+      {
+        Header: 'Total',
+        id: 'total',
+        accessor: (props: IProductOrder) => {
+          return { price: props.price, quantity: props.quantity, prevPrice: props.prevPrice };
+        },
+        Cell: (props: { value: { price: number; quantity: number; prevPrice: number } }) => (
+          <div>
+            <p>
+              {(props.value.price * props.value.quantity).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </p>
+            <p className="line-through">
+              {props.value.prevPrice &&
+                (props.value.prevPrice * props.value.quantity).toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                })}
+            </p>
+          </div>
+        ),
+      },
+      {
+        Header: 'Status',
+        id: 'status',
+        accessor: (props: IProductOrder) => {
+          return { id: props.id, status: props.status };
+        },
+        Cell: (props: { value: { id: string; status: string } }) => (
+          <div className="flex justify-between items-center">
+            <div>
+              {props.value.status !== 'UNDEFINED' && (
+                <Label label={props.value.status} color={Label.colors.SUCCESS} />
+              )}
+            </div>
+            <TableActions status={props.value.status} id={props.value.id} />
           </div>
         ),
       },
@@ -78,6 +116,7 @@ function Table({ products }: Props) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     // @ts-ignore
     columns,
+    // TODO: add picture
     data: products || [],
   });
 
@@ -92,7 +131,6 @@ function Table({ products }: Props) {
                 {headerGroup.headers.map((column, i) => (
                   <th {...column.getHeaderProps()}>{column.render('Header')}</th>
                 ))}
-                <th className="w-0 pl-4" />
               </tr>
             ))}
           </thead>
@@ -103,15 +141,17 @@ function Table({ products }: Props) {
                 <tr {...row.getRowProps()}>
                   <td className="w-0 pl-4" />
                   {row.cells.map((cell, i) => {
-                    const isFirstOrLast = i === 0 || i === row.cells.length - 1;
+                    const isGray = i === row.cells.length - 1;
 
                     return (
-                      <td className={!isFirstOrLast ? 'withPadding' : ''} {...cell.getCellProps()}>
+                      <td
+                        {...cell.getCellProps()}
+                        className={isGray ? 'p-3 pl-6 bg-gray-50 w-80' : 'py-3'}
+                      >
                         {cell.render('Cell')}
                       </td>
                     );
                   })}
-                  <td className="w-0 pl-4" />
                 </tr>
               );
             })}
